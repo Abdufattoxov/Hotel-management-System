@@ -22,12 +22,14 @@ public class HotelServiceServiceImpl implements HotelServiceService {
     private final HotelServiceRepository serviceRepository;
     private final HotelServiceMapper serviceMapper;
 
+    @Override
     public ApiResponse<Void> create(HotelServiceRequestDto serviceRequestDTO) {
         HotelInService service = serviceMapper.mapToEntity(serviceRequestDTO);
         serviceRepository.save(service);
         return new ApiResponse<>().success();
     }
 
+    @Override
     public ApiResponse<HotelServiceResponseDto> getById(Long id) {
         Optional<HotelInService> hotelServiceOptional = serviceRepository.findById(id);
         if (hotelServiceOptional.isEmpty()) {
@@ -39,11 +41,13 @@ public class HotelServiceServiceImpl implements HotelServiceService {
 
     }
 
+    @Override
     public PaginationResponse getAll(Pageable pageable) {
         Page<HotelServiceResponseDto> serviceResponse = serviceRepository.findAllResponseDto(pageable);
         return new PaginationResponse(serviceResponse.getTotalPages(), serviceResponse.getContent());
     }
 
+    @Override
     public ApiResponse<Void> update(Long id, HotelServiceRequestDto serviceRequestDTO) {
         Optional<HotelInService> hotelServiceOptional = serviceRepository.findById(id);
         if (hotelServiceOptional.isEmpty()) {
@@ -56,6 +60,7 @@ public class HotelServiceServiceImpl implements HotelServiceService {
 
     }
 
+    @Override
     public ApiResponse<Void> delete(Long id) {
         Optional<HotelInService> hotelServiceOptional = serviceRepository.findById(id);
         if (hotelServiceOptional.isEmpty()) {

@@ -29,6 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentMapper paymentMapper;
     private final UserRepository userRepository;
 
+    @Override
     public ApiResponse<Void> process(PaymentRequestDto paymentRequestDTO) {
         Reservation reservation = reservationRepository.findById(paymentRequestDTO.reservationId()).orElseThrow(() ->
                 new CustomNotFoundException("Reservation not found with id: " + paymentRequestDTO.reservationId())
@@ -57,6 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+    @Override
     public ApiResponse<PaymentResponseDto> getById(Long paymentId) {
         Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
         if (paymentOptional.isEmpty()) {
@@ -67,6 +69,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+    @Override
     public ApiResponse<List<PaymentResponseDto>> getAllByUserId(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
@@ -78,6 +81,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+    @Override
     public ApiResponse<List<PaymentResponseDto>> getAllByReservationId(Long reservationId) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
@@ -88,6 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
         return new ApiResponse<List<PaymentResponseDto>>().success(responseDto);
 
     }
+
 
     private double calculateTotalAmount(Reservation reservation) {
         long totalDays = ChronoUnit.DAYS.between(reservation.getCheckInDate(), reservation.getCheckOutDate());

@@ -23,12 +23,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @Override
     public ApiResponse<Void> create(UserRequestDto userRequestDto) {
         User user = userMapper.mapToEntity(userRequestDto);
         userRepository.save(user);
         return new ApiResponse<>().success();
     }
 
+    @Override
     public ApiResponse<Void> update(UserRequestDto userRequestDto, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
     public ApiResponse<UserResponseDto> getById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
@@ -50,11 +53,13 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse<UserResponseDto>().success(responseDto);
     }
 
+    @Override
     public PaginationResponse getAll(Pageable pageable) {
         Page<UserResponseDto> userResponse = userRepository.findAllUserResponse(pageable);
         return new PaginationResponse(userResponse.getTotalPages(), userResponse.getContent());
     }
 
+    @Override
     public ApiResponse<Void> delete(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
@@ -65,6 +70,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
     public ApiResponse<Void> makeUserAdmin(Long adminUserId, Long userId) {
         Optional<User> adminOptional = userRepository.findById(adminUserId);
         if (adminOptional.isEmpty()) {

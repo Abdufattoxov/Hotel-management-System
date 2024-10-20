@@ -24,12 +24,14 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
 
+    @Override
     public ApiResponse<Void> create(RoomRequestDto roomRequestDTO) {
         Room room = roomMapper.mapToEntity(roomRequestDTO);
         roomRepository.save(room);
         return new ApiResponse<>().success();
     }
 
+    @Override
     public ApiResponse<RoomResponseDto> getById(Long id) {
         Optional<Room> roomOptional = roomRepository.findById(id);
         if (roomOptional.isEmpty()) {
@@ -40,11 +42,13 @@ public class RoomServiceImpl implements RoomService {
 
     }
 
+    @Override
     public PaginationResponse getAll(Pageable pageable) {
         Page<RoomResponseDto> allRoomResponses = roomRepository.findAllRoomResponses(pageable);
         return new PaginationResponse(allRoomResponses.getTotalPages(), allRoomResponses.getContent());
     }
 
+    @Override
     public ApiResponse<Void> update(Long id, RoomRequestDto roomRequestDTO) {
         Optional<Room> roomOptional = roomRepository.findById(id);
         if (roomOptional.isEmpty()) {
@@ -57,6 +61,7 @@ public class RoomServiceImpl implements RoomService {
 
     }
 
+    @Override
     public ApiResponse<Void> delete(Long id) {
         Optional<Room> roomOptional = roomRepository.findById(id);
         if (roomOptional.isEmpty()) {
@@ -67,6 +72,7 @@ public class RoomServiceImpl implements RoomService {
 
     }
 
+    @Override
     public PaginationResponse findAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, Pageable pageable) {
         Page<RoomResponseDto> response = roomRepository.findAvailableRooms(checkInDate, checkOutDate, pageable);
         return new PaginationResponse(response.getTotalPages(), response.getContent());

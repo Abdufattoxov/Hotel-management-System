@@ -31,6 +31,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final RoomRepository roomRepository;
     private final HotelServiceRepository serviceRepository;
 
+    @Override
     public ApiResponse<Void> create(ReservationRequestDto reservationDto) {
         roomRepository.findById(reservationDto.roomId()).orElseThrow(() ->
                 new CustomNotFoundException("Room not found with id: " + reservationDto.roomId())
@@ -54,6 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    @Override
     public ApiResponse<ReservationResponseDto> getById(Long reservationId) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
@@ -64,6 +66,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    @Override
     public ApiResponse<Void> update(Long reservationId, ReservationRequestDto reservationDto) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
@@ -84,6 +87,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    @Override
     public ApiResponse<Void> delete(Long reservationId) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
@@ -94,6 +98,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    @Override
     public ApiResponse<List<ReservationResponseDto>> getAllByUserId(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
@@ -105,6 +110,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    @Override
     public ApiResponse<List<ReservationResponseDto>> getAllByRoomId(Long roomId) {
         Optional<Room> roomOptional = roomRepository.findById(roomId);
         if (roomOptional.isEmpty()) {
