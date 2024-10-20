@@ -51,4 +51,7 @@ The **Hotel Management System** is a robust backend solution designed to streaml
    ```bash
    mvn spring-boot:run
 
+6. Swaggers can be seen with this url:
+    ```bash
+    http://localhost:8080/swagger-ui/index.html
 
